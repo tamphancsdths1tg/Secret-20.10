@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Máy gắp thú — Bí mật 20/10</title>
+<style>
+:root{--mau-chu:#28516f;--xanhtroi:#82c8f5;--xanhsua:#ddf1ff;--xanhdenim:#3e83b8;--vang:#fff0c7;--nen:#f0f8ff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:18px;background:linear-gradient(135deg,#d9efff,#b9e2fa 55%,#eaf7ff);font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:var(--mau-chu)}
+button{font:inherit;font-weight:800;border:2px solid white;border-radius:13px;padding:12px 15px;cursor:pointer;color:#28516f;background:linear-gradient(120deg,#ffffff,#d8edff);box-shadow:0 4px 0 #6ca8d3;transition:filter .15s,transform .1s}
+button:hover{filter:saturate(1.15)}button:active{transform:translateY(3px);box-shadow:0 1px 0 #8660b9}button:disabled{opacity:.6;cursor:wait}
+button:focus-visible{outline:3px solid #34245f;outline-offset:3px}
+.app{max-width:1080px;margin:auto}
+
+header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: center;
+  margin: 0 0 22px;
+  padding: 25px 18px;
+  border: 3px solid white;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #28516f, #3e83b8, #28516f);
+  box-shadow: 0 8px 0 #3e83b833,
+              0 14px 28px #28516f18;
+}
+
+header .star {
+  position: absolute;
+  color: white;
+  pointer-events: none;
+  z-index: 0;
+  animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+header > *:not(.star) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 0.85; }
+}
+
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 3.25rem);
+  line-height: 1.2;
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  color: #eaf6ff;
+  text-shadow: 0 2px 0 #a9d6f5,
+               0 0 12px #d8edff80;
+}
+
+h1 .title-highlight {
+  color: #d9cfff;
+  text-shadow: 0 2px 0 #a99adf,
+               0 0 14px #c8b8ff80;
+}
+
+header p {
+  margin: 10px 0 0;
+  font-size: clamp(0.9rem, 2vw, 1.08rem);
+  font-weight: 800;
+  color: #b2daf5;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 20px 12px;
+    border-radius: 22px;
+  }
+}
+
+.layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(270px,.88fr);gap:18px}
+.panel{background:#f8fcff;border:3px solid white;border-radius:24px;padding:15px;box-shadow:0 12px 0 #7959c033,0 18px 38px #49377c24}
+.shell{background:linear-gradient(135deg,#82c8f5,#b9e2fa 45%,#3e83b8);padding:9px;border:4px solid white;border-radius:20px}
+.marquee{background:repeating-linear-gradient(135deg,#f8fcff 0 12px,#d9efff 12px 24px);border:3px solid white;border-radius:10px;text-align:center;padding:8px;color:#3e83b8;font-size:clamp(1.35rem,4vw,2rem);font-weight:1000;text-shadow:2px 2px white}
+.field-frame{background:#3e83b8;padding:8px 7px 0;border-radius:12px 12px 0 0;margin-top:8px}
+.field{height:350px;position:relative;overflow:hidden;border:4px solid white;border-radius:8px 8px 0 0;background:linear-gradient(#dff3ff 0 61%,#b9e2fa 61% 68%,#eaf7ff 68% 72%,#f8fcff 72%);box-shadow:inset 0 0 0 3px #78d4e8}
+.cloud{position:absolute;top:20%;left:-5%;width:110%;height:80px;background:#fff9;clip-path:polygon(0 100%,0 75%,7% 75%,11% 45%,18% 55%,24% 15%,30% 52%,38% 42%,44% 65%,52% 20%,61% 42%,70% 8%,78% 48%,86% 35%,93% 64%,100% 50%,100% 100%);pointer-events:none}
+.rail{position:absolute;left:8%;top:0;bottom:0;width:4px;background:#fff9;box-shadow:8px 0 #fff5}
+.carriage{position:absolute;z-index:4;top:5px;left:50%;width:64px;height:70px;transform:translateX(-50%);transition:left .28s ease;pointer-events:none}
+.cable{position:absolute;top:0;left:50%;width:5px;height:34px;transform:translateX(-50%);background:linear-gradient(90deg,#fff,#d9fbff,#fff);box-shadow:2px 0 #6384c4;transition:height .62s cubic-bezier(.2,.8,.2,1)}
+.claw{position:absolute;left:50%;top:calc(34px - 1px);width:52px;height:42px;transform:translateX(-50%);transition:top .62s cubic-bezier(.2,.8,.2,1)}
+.head{position:absolute;left:50%;top:0;transform:translateX(-50%);width:34px;height:22px;border:3px solid #43518d;border-radius:8px 8px 5px 5px;background:linear-gradient(135deg,#fff,#bdfaff)}
+.arm{position:absolute;top:15px;width:10px;height:27px;background:#efffff;border:3px solid #5067ae;border-top:0;border-radius:0 0 9px 9px;transform-origin:top;transition:transform .25s}
+.arm.left{left:6px;transform:rotate(30deg)}.arm.right{right:6px;transform:rotate(-30deg)}
+.carriage.closed .arm.left{transform:rotate(-4deg)}.carriage.closed .arm.right{transform:rotate(4deg)}
+.carried{position:absolute;left:50%;top:27px;transform:translateX(-50%);font-size:29px;display:none;filter:drop-shadow(2px 3px 0 #584d9855)}
+.carriage.has-toy .carried{display:block}
+.toys{position:absolute;left:2%;right:2%;bottom:27%;height:43%;display:flex;align-items:flex-end;justify-content:space-around;gap:1px}
+.toy{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;height:100%;font-size:clamp(1.45rem,4.5vw,2.8rem);line-height:1;filter:drop-shadow(0 4px 0 #6653a633);user-select:none;transition:opacity .2s}
+.toy:nth-child(2n){transform:translateY(3px) rotate(-4deg)}.toy:nth-child(3n){transform:translateY(-2px) rotate(4deg)}
+.toy span{display:block}
+.floor{position:absolute;left:0;right:0;bottom:0;height:28%;background:repeating-linear-gradient(90deg,#b9e2fa 0 22px,#eaf7ff 22px 44px);border-top:5px solid white}
+.floor:before{content:"";position:absolute;left:0;right:0;top:-8px;height:5px;background:#3e83b8}
+.drop-zone{position:absolute;right:3%;bottom:2%;z-index:2;width:54px;height:31px;background:#392b76;border:3px solid white;border-radius:8px 8px 2px 2px;display:grid;place-items:center;color:white;font-size:18px;font-weight:900}
+.machine-foot{height:34px;border-radius:0 0 10px 10px;background:#3e83b8;color:white;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.controls .move{background:linear-gradient(135deg,#e6f5ff,#b9e2fa);color:#28516f}
+.controls .grab{grid-column:1/-1;background:linear-gradient(100deg,#3e83b8,#82c8f5);color:#ffffff;font-size:1.08rem}
+.hint{text-align:center;color:#67538d;font-size:.84rem;line-height:1.5;margin:12px 0 0}
+.side{display:flex;flex-direction:column;gap:13px}
+.kicker{display:inline-flex;align-self:flex-start;background:#ddf1ff;color:#28516f;padding:6px 10px;border-radius:99px;font-size:.76rem;font-weight:900}
+.side h2{font-size:1.35rem;margin:0}
+.empty{text-align:center;background:linear-gradient(135deg,#fff0fa,#efffff,#fff9ce);border:2px dashed #c49be9;border-radius:18px;padding:18px 12px}
+.empty .big{font-size:3.3rem}.empty h3{margin:7px 0;color:#3e83b8}.empty p{margin:0;color:#74658e;line-height:1.5;font-size:.9rem}
+.prize{display:none;border-radius:18px;padding:14px;background:linear-gradient(140deg,#f8fcff,#ddf1ff,#fff0c7);border:2px solid white;box-shadow:inset 0 0 0 2px #b9e2fa}
+.prize.show{display:block;animation:cardIn .4s ease both}
+@keyframes cardIn{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+.prize-top{display:flex;align-items:center;gap:12px}
+.prize-emoji{display:grid;place-items:center;flex:0 0 76px;height:76px;font-size:3rem;background:white;border:2px solid #ffd1ed;border-radius:18px}
+.rarity{display:inline-block;padding:5px 9px;border-radius:99px;font-size:.75rem;font-weight:1000;background:#ffe88a;color:#7b4d1d}
+.rarity.super{background:linear-gradient(90deg,#c8a0ff,#ff9ad8,#fff18c);color:#4c2d84}
+.prize-name{font-size:1.25rem;font-weight:1000;margin-top:5px}
+.prize-wish{line-height:1.6;margin:13px 0 0;font-weight:650}
+.history-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.history-button{padding:9px 10px;box-shadow:0 3px 0 #8660b9;font-size:.88rem;background:linear-gradient(120deg,#eaf7ff,#b9e2fa)}
+.history-button:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.35)}
+.history-count{font-weight:1000;font-size:.88rem;color:#3e83b8;white-space:nowrap}
+.counter{font-size:.88rem;font-weight:800;color:#6d5a94}
+.progress{height:9px;background:#eadff7;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#6af0df,#ff78c4,#ffe56e);transition:width .35s}
+.note{font-size:.85rem;line-height:1.55;color:#6b5b8d;margin:0}
+.overlay{position:fixed;inset:0;z-index:20;display:none;place-items:center;padding:18px;background:#211643bb;backdrop-filter:blur(5px)}
+.overlay.show{display:grid}
+.modal{position:relative;overflow:hidden;width:min(480px,100%);padding:27px 23px;text-align:center;border:4px solid white;border-radius:28px;background:linear-gradient(140deg,#fff4fc,#e5ffff,#fff7c9);box-shadow:0 22px 0 #37215d55,0 25px 80px #180d43aa;animation:pop .42s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{transform:scale(.55) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.modal-emoji{font-size:5rem;line-height:1.2;animation:bounce .6s ease-in-out infinite alternate}
+@keyframes bounce{to{transform:translateY(-8px) rotate(5deg)}}
+.modal h2{margin:8px 0 0}.modal-wish{font-size:clamp(1.08rem,3vw,1.4rem);font-weight:900;line-height:1.55;margin:12px 0 20px}
+.fireworks{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.spark{position:absolute;width:7px;height:7px;border-radius:2px;background:var(--c);animation:burst 1.45s ease-out forwards;box-shadow:0 0 10px var(--c)}
+@keyframes burst{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(0) rotate(180deg);opacity:0}}
+.gender-screen{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:18px;background:linear-gradient(135deg,#d9efffee,#b9e2faed,#82c8f5ee)}
+.gender-box{width:min(480px,100%);background:#fff9ff;border:4px solid white;border-radius:28px;padding:26px;text-align:center;box-shadow:0 20px 0 #5b3b9966,0 25px 70px #3b247755}
+.gender-box h2{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 8px}.gender-box p{color:#70618f;line-height:1.5}
+.gender-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.gender-options button{font-size:1.15rem;padding:17px 10px}.boy{background:linear-gradient(135deg,#fbe280,#fff9ce)}.girl{background:linear-gradient(135deg,#fcd0ea,#ffb0df)}
+@media(max-width:760px){body{padding:11px}.layout{grid-template-columns:1fr}.panel{padding:11px}.field{height:325px}.toy{font-size:clamp(1.25rem,5vw,2.2rem)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Bó hoa xuất hiện giữa màn hình */
+.flower-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  z-index: 10000;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.flower-popup.show {
+  visibility: visible;
+  animation: flower-appear 6s ease forwards;
+}
+
+.flower-bouquet {
+  font-size: clamp(5rem, 20vw, 9rem);
+  filter: drop-shadow(0 0 18px #ffb0df);
+}
+
+.flower-popup p {
+  color: #ff78c4;
+  font-size: 1.1rem;
+  font-weight: bold;
+  -webkit-text-stroke: 3px #f9e6f1;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 6px #fcd0ea;
+}
+
+@keyframes flower-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.5);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(3);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+    visibility: hidden;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="gender-screen" id="genderScreen" role="dialog" aria-modal="true">
+  <div class="gender-box">
+    <div style="font-size:3rem">💌🌷✨</div>
+    <h2>Trước khi bắt đầu…</h2>
+    <p>Bạn có phải là một nửa xinh đẹp của thế giới không?</p>
+    <div class="gender-options">
+      <button class="boy" data-gender="nam">💛 Nam</button>
+      <button class="girl" data-gender="nữ">💗 Nữ</button>
+    </div>
+    <p style="font-size:.78rem;margin-bottom:0">Lựa chọn có thể sẽ quyết định tương lai.</p>
+  </div>
+</div>
+<main class="app">
+  <header>
+    <h1>🧸 MÁY GẮP THÚ <span class="title-highlight"> SIÊU MAY MẮN </span> 🧸</h1>
+    <p>✦ Mỗi bé thú mang theo một bí mật dành riêng cho bạn ✦</p>
+
+  </header>
+  <div class="layout">
+    <section class="panel">
+      <div class="shell">
+        <div class="marquee"> GẮP THÚ THẦN KỲ ✦ </div>
+        <div class="field-frame">
+          <div class="field" id="field">
+            <div class="cloud"></div><div class="rail"></div>
+            <div class="carriage" id="carriage">
+              <div class="cable" id="cable"></div>
+              <div class="claw" id="claw"><div class="head"></div><div class="arm left"></div><div class="arm right"></div><div class="carried" id="carried"></div></div>
+            </div>
+            <div class="toys" id="toys"></div>
+            <div class="floor"></div><div class="drop-zone">♡</div>
+          </div>
+        </div>
+        <div class="machine-foot">✦ CHÚC BẠN GẶP NHIỀU ĐIỀU MAY MẮN ✦</div>
+      </div>
+      <div class="controls">
+        <button class="move" data-move="left">◀ SANG TRÁI</button>
+        <button class="move" data-move="right">SANG PHẢI ▶</button>
+        <button class="grab" id="grab">GẮP THÚ — NHẬN GÌ??</button>
+      </div>
+      <p class="hint">Càng chỉ di chuyển sang trái hoặc phải ở trên cao.<br>Khi bấm GẮP THÚ, dây mới hạ xuống, kẹp thú rồi kéo lên.</p>
+    </section>
+    <aside class="panel side">
+      <span class="kicker">♡ BỘ SƯU TẬP CỦA BẠN</span>
+      <h2>Thông tin bé thú</h2>
+      <div class="empty" id="empty">
+        <div class="big">🔮🧸✨</div>
+        <h3>Hôm nay bạn sẽ gắp được gì?</h3>
+        <p>Một bé thú đáng yêu cùng bí mật đang đợi bạn.</p>
+      </div>
+      <div class="prize" id="prize">
+        <div class="prize-top">
+          <div class="prize-emoji" id="prizeEmoji">🧸</div>
+          <div><span class="rarity" id="prizeRarity">✦ HIẾM</span><div class="prize-name" id="prizeName">Bé Gấu</div></div>
+        </div>
+        <p class="prize-wish" id="prizeWish"></p>
+      </div>
+      <div class="history-nav" id="historyNav" style="display:none">
+        <button class="history-button" id="prevPrize" type="button">◀ Bé trước</button>
+        <span class="history-count" id="historyCount">1 / 1</span>
+        <button class="history-button" id="nextPrize" type="button">Bé tiếp ▶</button>
+      </div>
+      <div>
+        <div class="counter" id="counter">Đã nhận: 0 / 12 bé thú</div>
+        <div class="progress" style="margin-top:8px"><span id="progress"></span></div>
+      </div>
+      <p class="note"> Bạn đã thu thập hết bí mật chưa?? </p>
+      <button id="reset">↻ CHƠI LẠI TỪ ĐẦU</button>
+    </aside>
+  </div>
+</main>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="fireworks" id="fireworks"></div>
+    <div class="modal-emoji" id="modalEmoji">🧸</div>
+    <h2 id="modalTitle">Bạn gắp được quà rồi!</h2>
+    <div style="margin-top:10px"><span class="rarity" id="modalRarity">✦ HIẾM</span></div>
+    <p class="modal-wish" id="modalWish"></p>
+    <button id="continue"> ĐỒNG Ý </button>
+  </div>
+</div>
+
+<div id="flower-popup" class="flower-popup">
+  <div class="flower-bouquet">💐</div>
+  <p> Tặng bạn bó hoa nè!! </p>
+</div>
+
+<script>
+
+document.querySelectorAll("header").forEach((header, index) => {
+  const storageKey = `galaxy-stars-${index}`;
+  const starCount = 45;
+
+  let stars;
+
+  try {
+    stars = JSON.parse(localStorage.getItem(storageKey));
+  } catch {
+    stars = null;
+  }
+
+  // Chỉ random lần đầu
+  if (!Array.isArray(stars) || stars.length !== starCount) {
+    stars = Array.from({ length: starCount }, () => ({
+      x: Math.random() * 96,
+      y: Math.random() * 90,
+      size: Math.random() * 8 + 5,
+      opacity: Math.random() * 0.5 + 0.2,
+      delay: Math.random() * 3,
+      duration: Math.random() * 2 + 1.5,
+      symbol: Math.random() < 0.25 ? "✦" : "·"
+    }));
+
+    localStorage.setItem(storageKey, JSON.stringify(stars));
+  }
+
+  header.querySelectorAll(".star").forEach(s => s.remove());
+
+  stars.forEach(s => {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.textContent = s.symbol;
+    star.style.left = s.x + "%";
+    star.style.top = s.y + "%";
+    star.style.fontSize = s.size + "px";
+    star.style.opacity = s.opacity;
+    star.style.animationDelay = s.delay + "s";
+    star.style.animationDuration = s.duration + "s";
+
+    header.appendChild(star);
+  });
+});
+
+
+const flowerPopup = document.getElementById("flower-popup");
+
+document.querySelectorAll(
+  '.gender-options button[data-gender="nữ"]'
+).forEach(button => {
+  button.addEventListener("click", () => {
+    flowerPopup.classList.remove("show");
+    void flowerPopup.offsetWidth;
+    flowerPopup.classList.add("show");
+  });
+});
+
+
+const wishesFemale=[
+"Chúc bạn có một ngày 20/10 thật dịu dàng, được quan tâm bằng những điều nhỏ bé mà chân thành. 🌷",
+"Chúc bạn luôn tự tin với nét riêng của mình và không quên rằng bạn xứng đáng được yêu thương. 20/10 vui vẻ nhé!! 💗",
+"Mong nụ cười luôn tìm được đường trở lại với bạn, kể cả sau những ngày mệt mỏi. 20/10 vui vẻ nhé!! ✨",
+"Chúc bạn gặp nhiều người tử tế, được lắng nghe và được trân trọng đúng như bạn vốn là. 20/10 vui vẻ nhé!! 🌸",
+"Mong những điều bạn âm thầm cố gắng sẽ dần đơm hoa, vào đúng thời điểm của riêng bạn. 20/10 vui vẻ nhé!! 🌼",
+"Chúc bạn đủ mạnh mẽ để bước tiếp và đủ dịu dàng để nghỉ ngơi khi cần. 20/10 vui vẻ nhé!! 🫶",
+"Nhân ngày 20/10, mong bạn nhận được thật nhiều yêu thương — không chỉ hôm nay mà cả những ngày bình thường. 🎀",
+"Chúc bạn luôn thấy mình xinh đẹp theo cách riêng, từ ánh mắt đến những điều tốt lành bạn trao đi. 20/10 vui vẻ nhé!! 🦋",
+"Mong bạn có thêm nhiều lý do để vui, nhiều dịp để tự hào và nhiều người khiến bạn thấy an lòng. 20/10 vui vẻ nhé!! 💐",
+"Chúc mọi dự định của bạn tiến triển thuận lợi, từng bước nhỏ cũng đáng được ăn mừng. 20/10 vui vẻ nhé!! 🌟",
+"Mong bạn luôn giữ được sự tò mò, lòng tốt và niềm vui với những điều mình yêu thích. 20/10 vui vẻ nhé!! 🍓",
+"Hãy đặt bản thân vào danh sách những người cần được chăm sóc mỗi ngày nhé. 20/10 vui vẻ!! 💕",
+"Chúc bạn có một ngày 20/10 thật dịu dàng. Mong những ngày tới mang đến cho bạn tin vui, cơ hội và những cuộc gặp gỡ đáng nhớ. 🌈",
+"Chúc bạn luôn có can đảm nói điều mình nghĩ, chọn điều mình tin và sống theo cách mình mong muốn. 🌻",
+"Mong trái tim bạn được bình yên, những lo lắng nhẹ đi và những niềm vui ở lại lâu hơn. 20/10 vui vẻ nhé!! ☁️",
+"Chúc bạn được yêu thương mà không phải gồng mình, được nghỉ ngơi mà không thấy có lỗi. 20/10 vui vẻ nhé!! 🤍",
+"Mong bạn luôn gặp may mắn trên đường mình chọn và đủ kiên nhẫn với hành trình của chính mình. 20/10 vui vẻ nhé!! 🍀",
+"Chúc ngày 20/10 của bạn có một bất ngờ dễ thương, một lời nói ấm áp và một kỷ niệm thật vui. 🎁",
+"Mong bạn luôn nhớ những điều mình đã vượt qua và tự hào về phiên bản hiện tại của bản thân. 20/10 vui vẻ nhé!! 💖",
+"Chúc bạn có một năm thật nhiều trải nghiệm đẹp. 20/10 vui vẻ nhé!! 🌺"
+];
+const wishesGeneral=[
+"Chúc bạn luôn bình an, gặp nhiều người tử tế và có đủ thời gian cho những điều mình yêu quý. 🍀",
+"Mong những nỗ lực của bạn sớm mang lại kết quả khiến bạn mỉm cười tự hào. 🌟",
+"Chúc bạn có sức khỏe, tinh thần vững vàng và thật nhiều ngày vui ở phía trước. ☀️",
+"Mong những chuyện chưa như ý sẽ dần tìm được hướng giải quyết, từng chút một. 🌿",
+"Chúc bạn gặp đúng cơ hội, đúng người đồng hành và đủ tự tin để nắm lấy điều tốt đẹp. ✨",
+"Mong bạn luôn có một nơi để trở về, một người để sẻ chia và những điều nhỏ bé để mong chờ. 🏡",
+"Chúc bạn làm việc thuận lợi, nghỉ ngơi thoải mái và không quên dành thời gian cho bản thân. 🌈",
+"Mong may mắn ghé thăm bạn vào lúc cần nhất, còn niềm vui thì ở lại thật lâu. 🍀",
+"Chúc bạn đủ kiên trì với mục tiêu và cũng đủ bao dung với bản thân trong những ngày khó khăn. 💛",
+"Mong mỗi ngày mới mang đến cho bạn một điều đáng mong đợi, dù chỉ là một điều rất nhỏ. 🌼",
+"Chúc bạn luôn giữ được sự chân thành, lòng tốt và niềm tin vào những điều tử tế. 🤝",
+"Mong những cánh cửa phù hợp sẽ mở ra và bạn nhận ra giá trị của chính mình. 🚪",
+"Chúc bạn có nhiều tiếng cười, những cuộc trò chuyện vui và các kỷ niệm đáng nhớ. 🎈",
+"Mong điều bạn đang chờ đợi sẽ đến vào thời điểm phù hợp và tốt đẹp hơn bạn nghĩ. 🌤️",
+"Chúc bạn luôn có đủ can đảm để bắt đầu, đủ bền bỉ để tiếp tục và đủ bình tĩnh để chọn hướng đi. 🧭",
+"Mong cuộc sống dành cho bạn nhiều bất ngờ dễ chịu và những người khiến bạn thấy được tiếp thêm sức mạnh. 💫",
+"Chúc bạn ngủ ngon, ăn ngon, làm điều mình thích và đón nhận những ngày bình yên. ☁️",
+"Mong bạn luôn nhìn thấy tiến bộ của mình, kể cả khi con đường phía trước còn dài. 🌱",
+"Chúc bạn gặp nhiều thuận lợi trong học tập, công việc và những dự định đang ấp ủ. 📚",
+"Mong niềm vui đến với bạn theo nhiều cách khác nhau và ở lại lâu hơn một chút. 🎉"
+];
+const toyEmojis=["🐻","🐸","🐰","🐱","🐼","🦊","🐥","🐧","🐹","🐨","🐯","🦄"];
+const toyNames=["Bé Gấu","Bé Ếch","Bé Thỏ","Bé Mèo","Bé Panda","Bé Cáo","Bé Chíp","Bé Cánh Cụt","Bé Hamster","Bé Koala","Bé Hổ","Bé Kỳ Lân"];
+let gender=null,x=50,busy=false,caught=new Set(),unusedWishes=[],wishPool=[];
+let prizeHistory=[],historyIndex=-1;
+const field=document.getElementById("field"),carriage=document.getElementById("carriage"),cable=document.getElementById("cable"),claw=document.getElementById("claw");
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function resetWishes(){wishPool=shuffle((gender==="nữ"?wishesFemale:wishesGeneral).map((wish,i)=>({wish,id:i})));unusedWishes=[...wishPool]}
+function renderToys(){const root=document.getElementById("toys");root.innerHTML="";toyEmojis.forEach((emoji,i)=>{if(caught.has(i))return;const el=document.createElement("div");el.className="toy";el.dataset.id=String(i);const span=document.createElement("span");span.textContent=emoji;el.appendChild(span);root.appendChild(el)})}
+function placeCarriage(){carriage.style.left=x+"%"}
+function move(dir){if(busy)return;if(dir==="left")x=Math.max(7,x-8);if(dir==="right")x=Math.min(93,x+8);placeCarriage()}
+document.querySelectorAll("[data-move]").forEach(b=>b.addEventListener("click",()=>move(b.dataset.move)));
+document.addEventListener("keydown",e=>{if(document.getElementById("genderScreen").style.display!=="none"||document.getElementById("overlay").classList.contains("show"))return;const map={ArrowLeft:"left",ArrowRight:"right"};if(map[e.key]){e.preventDefault();move(map[e.key])}if(e.code==="Space"){e.preventDefault();grab()}});
+document.querySelectorAll("[data-gender]").forEach(b=>b.addEventListener("click",()=>{gender=b.dataset.gender;document.getElementById("genderScreen").style.display="none";resetWishes()}));
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+function nearestToy(){const list=[...document.querySelectorAll(".toy")];if(!list.length)return null;const fr=field.getBoundingClientRect(),cx=fr.left+fr.width*x/100;let best=list[0],bestDist=Infinity;for(const el of list){const r=el.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-cx);if(d<bestDist){bestDist=d;best=el}}return best}
+function chooseWish(){if(!unusedWishes.length)resetWishes();return unusedWishes.pop()}
+async function grab(){
+ if(busy)return;
+ const target=nearestToy();
+ if(!target){document.getElementById("modalEmoji").textContent="🎉";document.getElementById("modalTitle").textContent="Bạn đã gắp hết thú rồi!";document.getElementById("modalRarity").textContent="HOÀN THÀNH";document.getElementById("modalWish").textContent="Cảm ơn bạn đã chơi. Chúc bạn luôn có thật nhiều niềm vui!";document.getElementById("overlay").classList.add("show");fireworks();return}
+ busy=true;document.getElementById("grab").disabled=true;
+ // Automatically line up horizontally. The carriage and cable are one assembly.
+ const fr=field.getBoundingClientRect(),tr=target.getBoundingClientRect();
+ x=Math.max(7,Math.min(93,((tr.left+tr.width/2-fr.left)/fr.width)*100));placeCarriage();
+ carriage.classList.remove("closed","has-toy");await wait(350);
+ // Only the grab action lowers the cable and claw; the cable is inside carriage.
+ const drop=Math.min(field.clientHeight*.54,Math.max(120,field.clientHeight-(tr.top-fr.top)-70));
+ cable.style.height=(drop+25)+"px";claw.style.top=(drop+24)+"px";await wait(700);
+ carriage.classList.add("closed");await wait(300);
+ const id=Number(target.dataset.id),emoji=toyEmojis[id],name=toyNames[id],chosen=chooseWish();
+ document.getElementById("carried").textContent=emoji;carriage.classList.add("has-toy");target.style.opacity="0";await wait(250);
+ cable.style.height="34px";claw.style.top="33px";await wait(650);
+ carriage.classList.remove("closed","has-toy");document.getElementById("carried").textContent="";
+ caught.add(id);target.remove();const rarity=Math.random()<.17?"siêu hiếm":"hiếm";
+ const prize={emoji,name,wish:chosen.wish,rarity};
+ prizeHistory.push(prize);historyIndex=prizeHistory.length-1;
+ updatePrize(prize);updateHistoryNav();fireworks();document.getElementById("overlay").classList.add("show");
+ document.getElementById("grab").disabled=false;busy=false;
+}
+
+document.getElementById("grab").addEventListener("click", grab);
+
+function updatePrize(p){
+ document.getElementById("empty").style.display="none";const card=document.getElementById("prize");card.classList.remove("show");void card.offsetWidth;card.classList.add("show");
+ document.getElementById("prizeEmoji").textContent=p.emoji;document.getElementById("prizeName").textContent=p.name;document.getElementById("prizeWish").textContent=p.wish;
+ const r=document.getElementById("prizeRarity"),mr=document.getElementById("modalRarity");r.textContent=p.rarity==="siêu hiếm"?"✦ SIÊU HIẾM":"✦ HIẾM";r.className="rarity"+(p.rarity==="siêu hiếm"?" super":"");mr.textContent=r.textContent;mr.className=r.className;
+ document.getElementById("modalEmoji").textContent=p.emoji;document.getElementById("modalTitle").textContent="Bạn gắp được "+p.name+"!";document.getElementById("modalWish").textContent=p.wish;
+ document.getElementById("counter").textContent=`Đã nhận: ${caught.size} / ${toyEmojis.length} bé thú`;document.getElementById("progress").style.width=(caught.size/toyEmojis.length*100)+"%";
+}
+function updateHistoryNav(){
+ const nav=document.getElementById("historyNav");
+ nav.style.display=prizeHistory.length>0?"flex":"none";
+ document.getElementById("historyCount").textContent=`${historyIndex+1} / ${prizeHistory.length}`;
+ document.getElementById("prevPrize").disabled=historyIndex<=0;
+ document.getElementById("nextPrize").disabled=historyIndex>=prizeHistory.length-1;
+}
+function showHistory(index){
+ if(index<0||index>=prizeHistory.length)return;
+ historyIndex=index;
+ updatePrize(prizeHistory[historyIndex]);
+ updateHistoryNav();
+}
+document.getElementById("prevPrize").addEventListener("click",()=>showHistory(historyIndex-1));
+document.getElementById("nextPrize").addEventListener("click",()=>showHistory(historyIndex+1));
+function fireworks(){const root=document.getElementById("fireworks");root.innerHTML="";const colors=["#ff55ae","#42e9e4","#ffdf47","#a986ff","#ff885e","#78ef9b"];for(let i=0;i<90;i++){const s=document.createElement("i");s.className="spark";s.style.left=(4+Math.random()*92)+"%";s.style.top=(8+Math.random()*75)+"%";s.style.setProperty("--x",(Math.random()*220-110)+"px");s.style.setProperty("--y",(Math.random()*220-110)+"px");s.style.setProperty("--c",colors[i%colors.length]);s.style.animationDelay=(Math.random()*.35)+"s";root.appendChild(s)}}
+document.getElementById("continue").addEventListener("click",()=>{document.getElementById("overlay").classList.remove("show");document.getElementById("fireworks").innerHTML="";if(caught.size===toyEmojis.length)document.getElementById("grab").textContent="🎉 ĐÃ GẮP HẾT THÚ"});
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")document.getElementById("continue").click()});
+document.getElementById("reset").addEventListener("click",()=>{caught.clear();prizeHistory=[];historyIndex=-1;document.getElementById("historyNav").style.display="none";x=50;busy=false;placeCarriage();carriage.className="carriage";cable.style.height="34px";claw.style.top="33px";document.getElementById("carried").textContent="";document.getElementById("overlay").classList.remove("show");document.getElementById("grab").disabled=false;document.getElementById("grab").textContent="GẮP THÚ — NHẬN GÌ??";document.getElementById("empty").style.display="block";document.getElementById("prize").classList.remove("show");document.getElementById("counter").textContent=`Đã nhận: 0 / ${toyEmojis.length} bé thú`;document.getElementById("progress").style.width="0";renderToys();resetWishes()});
+renderToys();placeCarriage();
+</script>
+</body>
+</html>
