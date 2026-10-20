@@ -461,5 +461,8 @@ document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==
 document.getElementById("reset").addEventListener("click",()=>{caught.clear();prizeHistory=[];historyIndex=-1;document.getElementById("historyNav").style.display="none";x=50;busy=false;placeCarriage();carriage.className="carriage";cable.style.height="34px";claw.style.top="33px";document.getElementById("carried").textContent="";document.getElementById("overlay").classList.remove("show");document.getElementById("grab").disabled=false;document.getElementById("grab").textContent="GẮP THÚ — NHẬN GÌ??";document.getElementById("empty").style.display="block";document.getElementById("prize").classList.remove("show");document.getElementById("counter").textContent=`Đã nhận: 0 / ${toyEmojis.length} bé thú`;document.getElementById("progress").style.width="0";renderToys();resetWishes()});
 renderToys();placeCarriage();
 </script>
+
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8afb3277802c4899a4138ed15fd2fa5e"}'></script><!-- End Cloudflare Web Analytics -->
+  
 </body>
 </html>
